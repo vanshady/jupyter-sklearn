@@ -8,9 +8,14 @@ var App = React.createClass({
   getInitialState: function () {
     return { training_set: [] }
   },
+  componentDidMount: function() {
+    socket.on('send:output', this._dataReceive);
+  },
   handleDataSubmit: function(data) {
-    this.setState({ training_set: data });
     socket.emit('send:data', data);
+  },
+  _dataReceive: function(data) {
+    this.setState({ training_set: data });
   },
   render: function () {
     return (

@@ -10,10 +10,8 @@ const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 
 /* Configuration */
-app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 app.set('port', port);
-
 
 /* Socket.io Communication */
 const io = require('socket.io').listen(server);

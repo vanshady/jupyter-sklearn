@@ -11,8 +11,8 @@ module.exports = (socket) => {
   socket.on('send:data', (data) => {
     console.log(data);
 
-    socket.emit('change:output', {
-      text: data.text,
+    socket.emit('send:output', {
+      value: data.value,
     });
   });
 };

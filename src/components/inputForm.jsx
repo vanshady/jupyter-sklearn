@@ -5,7 +5,6 @@ var InputForm = React.createClass({
     return { value: 'Hello!' };
   },
   handleSubmit: function(e) {
-    e.preventDefault();
     if (this.state.value) {
       var data = {
         value: this.state.value,
@@ -13,20 +12,19 @@ var InputForm = React.createClass({
       this.props.onDataSubmit(data);
     }
   },
-  changeHandler: function(e) {
-    this.setState({ tevaluext: e.target.value });
+  handleChange: function(e) {
+    this.setState({ value: e.target.value });
   },
   render: function () {
     return (
-      <form onSubmit={this.handleSubmit} autoComplete="off">
+      <form onSubmit={this.handleSubmit}>
         <input
           type="text"
-          id="input"
-          onChange={this.changeHandler}
           value={this.state.value}
-          />
+          onChange={this.handleChange}
+        />  
+        <button type="submit" className="btn btn-default">Submit</button>
       </form>
-
     );
   }
 });

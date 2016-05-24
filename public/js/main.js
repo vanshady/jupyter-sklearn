@@ -19049,7 +19049,6 @@ var InputForm = React.createClass({
     return { value: 'Hello!' };
   },
   handleSubmit: function handleSubmit(e) {
-    e.preventDefault();
     if (this.state.value) {
       var data = {
         value: this.state.value
@@ -19057,19 +19056,23 @@ var InputForm = React.createClass({
       this.props.onDataSubmit(data);
     }
   },
-  changeHandler: function changeHandler(e) {
-    this.setState({ tevaluext: e.target.value });
+  handleChange: function handleChange(e) {
+    this.setState({ value: e.target.value });
   },
   render: function render() {
     return React.createElement(
       'form',
-      { onSubmit: this.handleSubmit, autoComplete: 'off' },
+      { onSubmit: this.handleSubmit },
       React.createElement('input', {
         type: 'text',
-        id: 'input',
-        onChange: this.changeHandler,
-        value: this.state.value
-      })
+        value: this.state.value,
+        onChange: this.handleChange
+      }),
+      React.createElement(
+        'button',
+        { type: 'submit', className: 'btn btn-default' },
+        'Submit'
+      )
     );
   }
 });
@@ -19077,32 +19080,18 @@ var InputForm = React.createClass({
 module.exports = InputForm;
 
 },{"react":158}],160:[function(require,module,exports){
-'use strict';
+"use strict";
 
 var React = require('react');
 
 var OutputForm = React.createClass({
-  displayName: 'OutputForm',
-
-  getInitialState: function getInitialState() {
-    return { value: 'Hello!' };
-  },
-
-  componentDidMount: function componentDidMount() {
-    socket.on('change:output', this._changeOutput);
-  },
-
-  _changeOutput: function _changeOutput(message) {
-    this.setState({ value: message });
-  },
-
+  displayName: "OutputForm",
 
   render: function render() {
-    return React.createElement('input', {
-      id: 'output',
-      type: 'text',
-      value: this.state.value,
-      onChange: this._changeOutput
+    return React.createElement("input", {
+      id: "output",
+      type: "text",
+      defaultValue: this.props.training_set.value
     });
   }
 });
@@ -19124,9 +19113,14 @@ var App = React.createClass({
   getInitialState: function getInitialState() {
     return { training_set: [] };
   },
+  componentDidMount: function componentDidMount() {
+    socket.on('send:output', this._dataReceive);
+  },
   handleDataSubmit: function handleDataSubmit(data) {
-    this.setState({ training_set: data });
     socket.emit('send:data', data);
+  },
+  _dataReceive: function _dataReceive(data) {
+    this.setState({ training_set: data });
   },
   render: function render() {
     return React.createElement(
