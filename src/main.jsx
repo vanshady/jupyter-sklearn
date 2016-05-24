@@ -1,43 +1,25 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import Notebook from 'react-notebook';
-var sample = require('../test.ipynb.json');
+var InputForm = require('./components/inputForm.jsx');
+var OutputForm = require('./components/outputForm.jsx');
+const socket = io.connect();
 
 var App = React.createClass({
-  renderNotebook: function(type) {
-      return (
-        <Notebook
-          content={sample}
-          ui={type}
-        />
-      );
+  getInitialState: function () {
+    return { training_set: [] }
   },
-  renderInputForm: function() {
-    return (
-      <form>
-        <label htmlFor="ipynb-file">
-        File:
-        <input type="file" name="ipynb-file" ref="ipynb-file" id="ipynb-file" />
-        </label>
-      </form>
-    );
+  handleDataSubmit: function(data) {
+    this.setState({ training_set: data });
+    socket.emit('send:data', data);
   },
-  render: function() {
+  render: function () {
     return (
       <div>
-        { this.renderInputForm() }
-        <div className="container-left">
-          { this.renderNotebook('jupyter') }
-        </div>
-        <div className="container-right">
-          { this.renderNotebook('nteract') }
-        </div>
+        <InputForm onDataSubmit={this.handleDataSubmit} />
+        <OutputForm training_set={this.state.training_set} />
       </div>
     );
   }
 });
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')
-);
+ReactDOM.render(<App/>, document.getElementById('app'));
