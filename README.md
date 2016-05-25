@@ -1,8 +1,11 @@
 # Jupyter-autosklearn
 
+## Warning!!!
+Because auto-sklearn only supports Ubuntu, you can only test this on Ubuntu
+
 ## Set up a Jupyter Notebook
 
-Then configure the BASE_URL in socket.js
+Then configure the `BASE_URL` in socket.js
 
 ## Running it
 
