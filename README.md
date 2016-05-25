@@ -1,4 +1,4 @@
-# ReactJS Socket.io Chat Application
+# Jupyter-autosklearn
 
 ## Set up a Jupyter Notebook
 
