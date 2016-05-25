@@ -6,7 +6,7 @@ const socket = io.connect();
 
 var App = React.createClass({
   getInitialState: function () {
-    return { training_set: [] }
+    return { training_set: [], output: "" }
   },
   componentDidMount: function() {
     socket.on('send:output', this._dataReceive);
@@ -15,13 +15,14 @@ var App = React.createClass({
     socket.emit('send:data', data);
   },
   _dataReceive: function(data) {
-    this.setState({ training_set: data });
+    this.setState({ output: data.value });
+    console.log(this.state.output);
   },
   render: function () {
     return (
       <div>
         <InputForm onDataSubmit={this.handleDataSubmit} />
-        <OutputForm training_set={this.state.training_set} />
+        <OutputForm output={this.state.output} />
       </div>
     );
   }

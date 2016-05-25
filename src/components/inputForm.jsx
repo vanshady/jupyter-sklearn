@@ -5,6 +5,7 @@ var InputForm = React.createClass({
     return { value: 'Hello!' };
   },
   handleSubmit: function(e) {
+    e.preventDefault();
     if (this.state.value) {
       var data = {
         value: this.state.value,

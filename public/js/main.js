@@ -19049,6 +19049,7 @@ var InputForm = React.createClass({
     return { value: 'Hello!' };
   },
   handleSubmit: function handleSubmit(e) {
+    e.preventDefault();
     if (this.state.value) {
       var data = {
         value: this.state.value
@@ -19080,19 +19081,19 @@ var InputForm = React.createClass({
 module.exports = InputForm;
 
 },{"react":158}],160:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var React = require('react');
 
 var OutputForm = React.createClass({
-  displayName: "OutputForm",
+  displayName: 'OutputForm',
 
   render: function render() {
-    return React.createElement("input", {
-      id: "output",
-      type: "text",
-      defaultValue: this.props.training_set.value
-    });
+    return React.createElement(
+      'div',
+      null,
+      this.props.output
+    );
   }
 });
 
@@ -19111,7 +19112,7 @@ var App = React.createClass({
   displayName: 'App',
 
   getInitialState: function getInitialState() {
-    return { training_set: [] };
+    return { training_set: [], output: "" };
   },
   componentDidMount: function componentDidMount() {
     socket.on('send:output', this._dataReceive);
@@ -19120,14 +19121,15 @@ var App = React.createClass({
     socket.emit('send:data', data);
   },
   _dataReceive: function _dataReceive(data) {
-    this.setState({ training_set: data });
+    this.setState({ output: data.value });
+    console.log(this.state.output);
   },
   render: function render() {
     return React.createElement(
       'div',
       null,
       React.createElement(InputForm, { onDataSubmit: this.handleDataSubmit }),
-      React.createElement(OutputForm, { training_set: this.state.training_set })
+      React.createElement(OutputForm, { output: this.state.output })
     );
   }
 });
