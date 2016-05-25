@@ -19046,7 +19046,7 @@ var InputForm = React.createClass({
   displayName: 'InputForm',
 
   getInitialState: function getInitialState() {
-    return { value: 'Hello!' };
+    return { value: '' };
   },
   handleSubmit: function handleSubmit(e) {
     e.preventDefault();
@@ -19063,16 +19063,26 @@ var InputForm = React.createClass({
   render: function render() {
     return React.createElement(
       'form',
-      { onSubmit: this.handleSubmit },
-      React.createElement('input', {
-        type: 'text',
-        value: this.state.value,
-        onChange: this.handleChange
-      }),
+      { className: 'form-horizontal', onSubmit: this.handleSubmit },
       React.createElement(
-        'button',
-        { type: 'submit', className: 'btn btn-default' },
-        'Submit'
+        'div',
+        { className: 'form-group', style: { marginBottom: "0" } },
+        React.createElement(
+          'div',
+          { className: 'col-sm-offset-2 col-sm-8' },
+          React.createElement('textarea', {
+            className: 'form-control',
+            rows: '10',
+            placeholder: 'Enter your training set here',
+            value: this.state.value,
+            onChange: this.handleChange
+          }),
+          React.createElement(
+            'button',
+            { style: { width: "100%" }, type: 'submit', className: ' btn btn-primary' },
+            'Submit'
+          )
+        )
       )
     );
   }
@@ -19081,18 +19091,31 @@ var InputForm = React.createClass({
 module.exports = InputForm;
 
 },{"react":158}],160:[function(require,module,exports){
-'use strict';
+"use strict";
 
 var React = require('react');
 
 var OutputForm = React.createClass({
-  displayName: 'OutputForm',
+  displayName: "OutputForm",
 
   render: function render() {
     return React.createElement(
-      'div',
-      null,
-      this.props.output
+      "form",
+      { className: "form-horizontal" },
+      React.createElement(
+        "div",
+        { className: "form-group" },
+        React.createElement(
+          "div",
+          { className: "col-sm-offset-2 col-sm-8" },
+          React.createElement("textarea", {
+            className: "form-control",
+            rows: "10",
+            placeholder: "Output",
+            value: this.props.output
+          })
+        )
+      )
     );
   }
 });
