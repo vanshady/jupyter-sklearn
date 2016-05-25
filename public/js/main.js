@@ -19046,43 +19046,76 @@ var InputForm = React.createClass({
   displayName: 'InputForm',
 
   getInitialState: function getInitialState() {
-    return { value: '' };
+    return { x: '', y: '' };
   },
   handleSubmit: function handleSubmit(e) {
     e.preventDefault();
-    if (this.state.value) {
+    if (this.state.x && this.state.y) {
       var data = {
-        value: this.state.value
+        x: this.state.x,
+        y: this.state.y
       };
       this.props.onDataSubmit(data);
     }
   },
-  handleChange: function handleChange(e) {
-    this.setState({ value: e.target.value });
+  handleXChange: function handleXChange(e) {
+    this.setState({ x: e.target.value });
+  },
+  handleYChange: function handleYChange(e) {
+    this.setState({ y: e.target.value });
   },
   render: function render() {
     return React.createElement(
       'form',
-      { className: 'form-horizontal', onSubmit: this.handleSubmit },
+      { className: 'form-inline col-sm-offset-2 col-sm-8', style: { paddingLeft: "5px", paddingRight: "5px" }, onSubmit: this.handleSubmit },
       React.createElement(
         'div',
-        { className: 'form-group', style: { marginBottom: "0" } },
+        { className: 'form-group', style: { marginBottom: "0", width: "50%" } },
         React.createElement(
           'div',
-          { className: 'col-sm-offset-2 col-sm-8' },
-          React.createElement('textarea', {
-            className: 'form-control',
-            rows: '10',
-            placeholder: 'Enter your training set here',
-            value: this.state.value,
-            onChange: this.handleChange
-          }),
+          { style: { width: "100%" } },
           React.createElement(
-            'button',
-            { style: { width: "100%" }, type: 'submit', className: ' btn btn-primary' },
-            'Submit'
-          )
+            'label',
+            { className: 'sr-only', htmlFor: 'Xform' },
+            'X form'
+          ),
+          React.createElement('textarea', {
+            style: { width: "100%" },
+            className: 'form-control',
+            id: 'Xform',
+            rows: '10',
+            placeholder: 'Enter your X here',
+            value: this.state.x,
+            onChange: this.handleXChange
+          })
         )
+      ),
+      React.createElement(
+        'div',
+        { className: 'form-group', style: { marginBottom: "0", width: "50%" } },
+        React.createElement(
+          'div',
+          { style: {} },
+          React.createElement(
+            'label',
+            { className: 'sr-only', htmlFor: 'Yform' },
+            'Y form'
+          ),
+          React.createElement('textarea', {
+            style: { width: "100%" },
+            className: 'form-control',
+            id: 'Yform',
+            rows: '10',
+            placeholder: 'Enter your Y here',
+            value: this.state.y,
+            onChange: this.handleYChange
+          })
+        )
+      ),
+      React.createElement(
+        'button',
+        { style: { width: "100%" }, type: 'submit', className: ' btn btn-primary' },
+        'Submit'
       )
     );
   }

@@ -54,7 +54,7 @@ module.exports = (socket) => {
     startNewSession(options).then(session => {
       // Execute and handle replies on the kernel.
       let future = session.kernel.execute({
-        code: 'print("abc"+"' + data.value + '")'
+        code: 'print("abc"+"' + data.x + '")'
       });
       future.onDone = (msg) => {
         console.log('Future is fulfilled');
