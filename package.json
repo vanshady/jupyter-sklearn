@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "kernel": "babel-node --presets=es2015-node6 main.js",
-    "start": "node app.js",
+    "babel-node": "babel-node --presets=es2015-node6",
+    "start": "nodemon --exec npm run babel-node -- app.js",
     "build": "watchify ./src/main.jsx -v -t [ babelify --presets [ es2015 react ] ] -o public/js/main.js",
     "test": "npm run build & npm run start"
   },
@@ -29,5 +29,8 @@
     "watchify": "^3.7.0",
     "ws": "^1.1.0",
     "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.2"
   }
 }
