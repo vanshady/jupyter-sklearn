@@ -19,7 +19,7 @@ import {
 // The base url of the notebook server.
 const BASE_URL = 'http://localhost:8888';
 
-const sklearn_code = ['import autosklearn.classification',
+const sklearn_code_1 = ['import autosklearn.classification',
   'import sklearn.datasets',
   'digits = sklearn.datasets.load_digits()',
   'X = digits.data',
@@ -28,10 +28,9 @@ const sklearn_code = ['import autosklearn.classification',
   'indices = np.arange(X.shape[0])',
   'np.random.shuffle(indices)',
   'X = X[indices]',
-  'y = y[indices]',
-  'X_train = X[:1000]',
-  'y_train = y[:1000]',
-  'X_test = X[1000:]',
+  'y = y[indices]'].join('\n');
+ 
+const sklearn_code_2 = ['X_test = X[1000:]',
   'y_test = y[1000:]',
   'automl = autosklearn.classification.AutoSklearnClassifier(time_left_for_this_task=60, per_run_time_limit=40)',
   'automl.fit(X_train, y_train)',
@@ -72,7 +71,10 @@ module.exports = (socket) => {
     startNewSession(options).then(session => {
       // Execute and handle replies on the kernel.
       let future = session.kernel.execute({
-        code: 'print("abc"+"' + data.x + '")'
+        code: sklearn_code_1 
+        + 'X_train = np.matrix("' + data.x + '"")\n' 
+        + 'y_train = np.matrix("' + data.y + '"")\n'
+        + sklearn_code_2
       });
       future.onDone = (msg) => {
         console.log('Future is fulfilled');
