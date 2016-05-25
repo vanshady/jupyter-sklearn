@@ -72,8 +72,8 @@ module.exports = (socket) => {
       // Execute and handle replies on the kernel.
       let future = session.kernel.execute({
         code: sklearn_code_1 
-        + 'X_train = np.matrix("' + data.x + '"")\n' 
-        + 'y_train = np.matrix("' + data.y + '"")\n'
+        + 'X_train = np.matrix("' + data.x + '")\n' 
+        + 'y_train = map(int, "' + data.y + '".split(" "))\n'
         + sklearn_code_2
       });
       future.onDone = (msg) => {
