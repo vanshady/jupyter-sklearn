@@ -28,7 +28,7 @@ const sklearn_code_1 = ['import autosklearn.classification',
   'indices = np.arange(X.shape[0])',
   'np.random.shuffle(indices)',
   'X = X[indices]',
-  'y = y[indices]'].join('\n');
+  'y = y[indices]\n'].join('\n');
  
 const sklearn_code_2 = ['X_test = X[1000:]',
   'y_test = y[1000:]',
